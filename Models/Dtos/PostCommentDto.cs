@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Net.Http.Headers;
-
+namespace Tabloid.Models.Dtos;
 public class PostCommentDto
 {
   public int Id { get; set; }

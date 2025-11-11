@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Net.Http.Headers;
+namespace Tabloid.Models;
 
 public class PostComment
 {
