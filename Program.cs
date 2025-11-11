@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Tabloid.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//github issue comment so I can resubmit a PR
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(opts =>
 {
