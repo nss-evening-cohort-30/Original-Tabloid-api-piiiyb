@@ -145,5 +145,89 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
                 IdentityUserId = "d224a03d-bf0c-4a05-b728-e3521e45d74d",
             }
         });
+        modelBuilder.Entity<Author>().HasData(new Author[]
+        {
+            new Author
+            {
+                Id = 1,
+                Name = "John Doe",
+                ProfilePic = "https://robohash.org/johndoe.png?size=150x150&set=set1"
+            },
+            new Author
+            {
+                Id = 2,
+                Name = "Jane Smith",
+                ProfilePic = "https://robohash.org/janesmith.png?size=150x150&set=set1"
+            }
+        });
+
+        modelBuilder.Entity<Category>().HasData(new Category[]
+        {
+            new Category { Id = 1, Name = "Technology" },
+            new Category { Id = 2, Name = "Lifestyle" }
+        });
+
+        modelBuilder.Entity<Post>().HasData(new Post[]
+        {
+            new Post
+            {
+                Id = 1,
+                Title = "The Rise of AI",
+                SubTitle = "How Artificial Intelligence is Changing the World",
+                CategoryId = 1,
+                PublishedOn = new DateTime(2024, 1, 1),
+                RealTime = 10,
+                AuthorId = 1,
+                Body = "AI is transforming industries across the globe, from healthcare to finance."
+            },
+            new Post
+            {
+                Id = 2,
+                Title = "Healthy Work-Life Balance",
+                SubTitle = "Simple Tips to Improve Your Daily Routine",
+                CategoryId = 2,
+                PublishedOn = new DateTime(2024, 2, 15),
+                RealTime = 7,
+                AuthorId = 2,
+                Body = "Balancing work and life is key to mental well-being and productivity."
+            }
+        });
+
+        modelBuilder.Entity<PostComment>().HasData(new PostComment[]
+        {
+            new PostComment
+            {
+                Id = 1,
+                PostId = 1,
+                UserId = 2,
+                Comment = "Great insights about AI!",
+                PostedOne = new DateTime(2024, 1, 2)
+            },
+            new PostComment
+            {
+                Id = 2,
+                PostId = 2,
+                UserId = 3,
+                Comment = "I’ll try these balance tips this week.",
+                PostedOne = new DateTime(2024, 2, 16)
+            }
+        });
+
+        modelBuilder.Entity<SubAuthor>().HasData(new SubAuthor[]
+        {
+            new SubAuthor
+            {
+                Id = 1,
+                UserId = 2,
+                AuthorId = 1
+            },
+            new SubAuthor
+            {
+                Id = 2,
+                UserId = 3,
+                AuthorId = 2
+            }
+        });
+
     }
 }
