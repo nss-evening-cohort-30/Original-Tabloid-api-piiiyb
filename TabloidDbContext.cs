@@ -9,7 +9,11 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
     private readonly IConfiguration _configuration;
 
     public DbSet<UserProfile> UserProfiles { get; set; }
-
+    public DbSet<Author> authors { get; set; }
+    public DbSet<Category> categorys { get; set; }
+    public DbSet<Post> posts { get; set; }
+    public DbSet<PostComment> postComments { get; set; }
+    public DbSet<SubAuthor> subAuthors { get; set; }
 
     public TabloidDbContext(DbContextOptions<TabloidDbContext> context, IConfiguration config) : base(context)
     {
