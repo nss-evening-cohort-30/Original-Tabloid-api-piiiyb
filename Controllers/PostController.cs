@@ -48,6 +48,41 @@ public class PostController : ControllerBase
   }
 
 
+  [HttpGet("{id}")]
+  // [Authorize]
+
+  public IActionResult GetById(int id)
+  {
+
+    Post post = _dbContext.posts.Include(c => c.Category).Include(a => a.Author).SingleOrDefault(s => s.Id == id);
+
+    if (post == null)
+    {
+      return NotFound();
+    }
+    return Ok(new PostDto
+    {
+      Id = post.Id,
+      Title = post.Title,
+      CategoryId = post.CategoryId,
+      Category = new CategoryDto
+      {
+        Id = post.Category.Id,
+        Name = post.Category.Name
+      },
+      PublishedOn = post.PublishedOn,
+      RealTime = post.RealTime,
+      AuthorId = post.AuthorId,
+      Author = new AuthorDto
+      {
+        Id = post.Author.Id,
+        Name = post.Author.Name
+      },
+      Body = post.Body,
+      SubTitle = post.SubTitle
+    });
+  }
+
 }
 
 
