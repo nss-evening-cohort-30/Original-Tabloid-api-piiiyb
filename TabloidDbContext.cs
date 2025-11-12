@@ -14,6 +14,7 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Post> posts { get; set; }
     public DbSet<PostComment> postComments { get; set; }
     public DbSet<SubAuthor> subAuthors { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 
     public TabloidDbContext(DbContextOptions<TabloidDbContext> context, IConfiguration config) : base(context)
     {
@@ -231,6 +232,16 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
                 UserId = 3,
                 AuthorId = 2
             }
+        });
+
+        modelBuilder.Entity<Tag>().HasData(new Tag[]
+        {
+            new Tag { Id = 1, Name = "C#" },
+            new Tag { Id = 2, Name = "JavaScript" },
+            new Tag { Id = 3, Name = "Python" },
+            new Tag { Id = 4, Name = "Web Development" },
+            new Tag { Id = 5, Name = "Data Science" },
+            new Tag { Id = 6, Name = "AI/ML" }
         });
 
     }
