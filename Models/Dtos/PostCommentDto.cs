@@ -1,0 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Net.Http.Headers;
+namespace Tabloid.Models.Dtos;
+public class PostCommentDto
+{
+  public int Id { get; set; }
+  [Required]
+  public int PostId { get; set; }
+  [Required]
+  public int UserId { get; set; }
+  [Required]
+  public string Comment { get; set; }
+  [Required]
+  public DateTime PostedOne { get; set; }
+}
