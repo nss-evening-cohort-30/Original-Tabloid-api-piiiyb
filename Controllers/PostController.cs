@@ -48,6 +48,92 @@ public class PostController : ControllerBase
   }
 
 
+
+  [HttpGet("{id}")]
+  // [Authorize]
+
+  public IActionResult GetById(int id)
+  {
+
+    Post post = _dbContext.posts.Include(c => c.Category).Include(a => a.Author).SingleOrDefault(s => s.Id == id);
+
+    if (post == null)
+    {
+      return NotFound();
+    }
+    return Ok(new PostDto
+    {
+      Id = post.Id,
+      Title = post.Title,
+      CategoryId = post.CategoryId,
+      Category = new CategoryDto
+      {
+        Id = post.Category.Id,
+        Name = post.Category.Name
+      },
+      PublishedOn = post.PublishedOn,
+      RealTime = post.RealTime,
+      AuthorId = post.AuthorId,
+      Author = new AuthorDto
+      {
+        Id = post.Author.Id,
+        Name = post.Author.Name
+      },
+      Body = post.Body,
+      SubTitle = post.SubTitle
+    });
+  }
+
+
+[HttpPut("{id}")]
+// [Authorize]
+public IActionResult UpdatePost(Post post, int id)
+  {
+      Post updatedPost = _dbContext.posts.SingleOrDefault(up => up.Id == id);
+      if (updatedPost == null)
+    {
+      return NotFound();
+    }
+
+    updatedPost.Title = post.Title;
+    updatedPost.CategoryId = post.CategoryId;
+    updatedPost.PublishedOn = post.PublishedOn;
+    updatedPost.RealTime = post.RealTime;
+    updatedPost.AuthorId = post.AuthorId;
+    updatedPost.Body = post.Body;
+    updatedPost.SubTitle = post.SubTitle;
+
+    _dbContext.SaveChanges();
+    return NoContent();
+  }
+
+[HttpPost]
+// [Authorize]
+public IActionResult NewPost(Post post)
+  {
+    _dbContext.posts.Add(post);
+    _dbContext.SaveChanges();
+    return Created($"/api/post/{post.Id}", post);
+  }
+
+[HttpDelete("{id}")]
+// [Authorize]
+public IActionResult RemovePost(int id)
+  {
+    var removedPost = _dbContext.posts.SingleOrDefault(rm => rm.Id == id);
+
+    if (removedPost == null)
+    {
+      return NotFound();
+    }
+
+    _dbContext.posts.Remove(removedPost);
+    _dbContext.SaveChanges();
+     return NoContent();
+
+  }
+
+
 }
 
 
