@@ -92,8 +92,16 @@ public class UserProfileController : ControllerBase
         {
             return NotFound();
         }
+        
         user.Email = user.IdentityUser.Email;
         user.UserName = user.IdentityUser.UserName;
+        
+        // Add roles like in your withroles endpoint
+        user.Roles = _dbContext.UserRoles
+            .Where(ur => ur.UserId == user.IdentityUserId)
+            .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
+            .ToList();
+            
         return Ok(user);
     }
 }
