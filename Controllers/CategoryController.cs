@@ -23,6 +23,6 @@ public class CategoryController : ControllerBase
   [HttpGet]
     public IActionResult Get()
     {
-        return Ok(_dbContext.categorys.Select(c => new CategoryDto {Name = c.Name}).ToList());
+        return Ok(_dbContext.categorys.Select(c => new CategoryDto {Name = c.Name, Id = c.Id}).ToList());
     }
 }
