@@ -25,4 +25,17 @@ public class CategoryController : ControllerBase
     {
         return Ok(_dbContext.categorys.Select(c => new CategoryDto {Name = c.Name, Id = c.Id}).ToList());
     }
+
+  [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+  {
+    Category CategoryToDelete = _dbContext.categorys.FirstOrDefault(c => c.Id == id);
+    if (CategoryToDelete == null)
+    {
+      return NotFound();
+    };
+    _dbContext.categorys.Remove(CategoryToDelete);
+    _dbContext.SaveChanges();
+    return NoContent();
+  }
 }
