@@ -46,4 +46,16 @@ public class CategoryController : ControllerBase
     _dbContext.SaveChanges();
     return Created($"api/Category/{CategoryToCreate.Id}", CategoryToCreate);
   }
+  [HttpPut("{id}")]
+    public IActionResult Put(int id, Category Update)
+  {
+    Category CategoryToUpdate = _dbContext.categorys.FirstOrDefault(c => c.Id == id);
+    if (CategoryToUpdate == null)
+    {
+      return NotFound();
+    }
+    CategoryToUpdate.Name = Update.Name;
+    _dbContext.SaveChanges();
+    return NoContent();
+  }
 }
