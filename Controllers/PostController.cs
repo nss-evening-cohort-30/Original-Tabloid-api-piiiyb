@@ -20,7 +20,7 @@ public class PostController : ControllerBase
   }
 
   [HttpGet]
-  // [Authorize]
+  [Authorize]
   public IActionResult Get()
   {
     return Ok(_dbContext.posts.Include(c => c.Category).Select(p => new PostDto
@@ -50,7 +50,7 @@ public class PostController : ControllerBase
 
 
   [HttpGet("{id}")]
-  // [Authorize]
+  [Authorize]
 
   public IActionResult GetById(int id)
   {
@@ -86,7 +86,7 @@ public class PostController : ControllerBase
 
 
 [HttpPut("{id}")]
-// [Authorize]
+[Authorize]
 public IActionResult UpdatePost(Post post, int id)
   {
       Post updatedPost = _dbContext.posts.SingleOrDefault(up => up.Id == id);
@@ -108,7 +108,7 @@ public IActionResult UpdatePost(Post post, int id)
   }
 
 [HttpPost]
-// [Authorize]
+[Authorize]
 public IActionResult NewPost(Post post)
   {
     _dbContext.posts.Add(post);
@@ -117,7 +117,7 @@ public IActionResult NewPost(Post post)
   }
 
 [HttpDelete("{id}")]
-// [Authorize]
+[Authorize]
 public IActionResult RemovePost(int id)
   {
     var removedPost = _dbContext.posts.SingleOrDefault(rm => rm.Id == id);
