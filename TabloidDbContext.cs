@@ -9,7 +9,6 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
     private readonly IConfiguration _configuration;
 
     public DbSet<UserProfile> UserProfiles { get; set; }
-    public DbSet<Author> authors { get; set; }
     public DbSet<Category> categorys { get; set; }
     public DbSet<Post> posts { get; set; }
     public DbSet<PostComment> postComments { get; set; }
@@ -150,21 +149,6 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
                 IdentityUserId = "d224a03d-bf0c-4a05-b728-e3521e45d74d",
             }
         });
-        modelBuilder.Entity<Author>().HasData(new Author[]
-        {
-            new Author
-            {
-                Id = 1,
-                Name = "John Doe",
-                ProfilePic = "https://robohash.org/johndoe.png?size=150x150&set=set1"
-            },
-            new Author
-            {
-                Id = 2,
-                Name = "Jane Smith",
-                ProfilePic = "https://robohash.org/janesmith.png?size=150x150&set=set1"
-            }
-        });
 
         modelBuilder.Entity<Category>().HasData(new Category[]
         {
@@ -182,7 +166,7 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
                 CategoryId = 1,
                 PublishedOn = new DateTime(2024, 1, 1),
                 RealTime = 10,
-                AuthorId = 1,
+                UserId = 1,
                 Body = "AI is transforming industries across the globe, from healthcare to finance."
             },
             new Post
@@ -193,7 +177,7 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
                 CategoryId = 2,
                 PublishedOn = new DateTime(2024, 2, 15),
                 RealTime = 7,
-                AuthorId = 2,
+                UserId = 2,
                 Body = "Balancing work and life is key to mental well-being and productivity."
             }
         });
