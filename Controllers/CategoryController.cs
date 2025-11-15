@@ -38,4 +38,12 @@ public class CategoryController : ControllerBase
     _dbContext.SaveChanges();
     return NoContent();
   }
+
+  [HttpPost]
+    public IActionResult Post(Category CategoryToCreate)
+  {
+    _dbContext.categorys.Add(CategoryToCreate);
+    _dbContext.SaveChanges();
+    return Created($"api/Category/{CategoryToCreate.Id}", CategoryToCreate);
+  }
 }
