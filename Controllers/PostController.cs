@@ -50,6 +50,111 @@ public class PostController : ControllerBase
 
   }
 
+  [HttpGet("{id}")]
+  // [Authorize]
+  public IActionResult GetById(int id)
+  {
+    var post = _dbContext.posts
+      .Include(p => p.Category)
+      .Include(p => p.User)
+      .Include(p => p.PostTags)
+        .ThenInclude(pt => pt.Tag)
+      .FirstOrDefault(p => p.Id == id);
+
+    if (post == null)
+    {
+      return NotFound();
+    }
+
+    var postDto = new PostDto
+    {
+      Id = post.Id,
+      Title = post.Title,
+      CategoryId = post.CategoryId,
+      Category = new CategoryDto
+      {
+        Id = post.Category.Id,
+        Name = post.Category.Name
+      },
+      PublishedOn = post.PublishedOn,
+      RealTime = post.RealTime,
+      UserId = post.UserId,
+      User = new UserProfileDto
+      {
+        Id = post.User.Id,
+        FirstName = post.User.FirstName,
+        LastName = post.User.LastName
+      },
+      Body = post.Body,
+      SubTitle = post.SubTitle,
+      Tags = post.PostTags?.Select(pt => new TagDto
+      {
+        Id = pt.Tag.Id,
+        Name = pt.Tag.Name
+      }).ToList() ?? new List<TagDto>()
+    };
+
+    return Ok(postDto);
+  }
+
+  [HttpGet("{postId}/tags")]
+  // [Authorize]
+  public IActionResult GetPostTags(int postId)
+  {
+    var post = _dbContext.posts
+      .Include(p => p.PostTags)
+        .ThenInclude(pt => pt.Tag)
+      .FirstOrDefault(p => p.Id == postId);
+
+    if (post == null)
+    {
+      return NotFound();
+    }
+
+    var tags = post.PostTags?.Select(pt => new TagDto
+    {
+      Id = pt.Tag.Id,
+      Name = pt.Tag.Name
+    }).ToList() ?? new List<TagDto>();
+
+    return Ok(tags);
+  }
+
+  [HttpPut("{postId}/tags")]
+  // [Authorize]
+  public IActionResult UpdatePostTags(int postId, [FromBody] List<int> tagIds)
+  {
+    var post = _dbContext.posts
+      .Include(p => p.PostTags)
+      .FirstOrDefault(p => p.Id == postId);
+
+    if (post == null)
+    {
+      return NotFound();
+    }
+
+    // Remove all existing tags
+    _dbContext.PostTags.RemoveRange(post.PostTags);
+
+    // Add new tags
+    foreach (var tagId in tagIds)
+    {
+      var tag = _dbContext.Tags.FirstOrDefault(t => t.Id == tagId);
+      if (tag != null)
+      {
+        post.PostTags.Add(new PostTag
+        {
+          PostId = postId,
+          TagId = tagId
+        });
+      }
+    }
+
+    _dbContext.SaveChanges();
+
+    return NoContent();
+  }
+
 
 
   [HttpGet("{id}")]

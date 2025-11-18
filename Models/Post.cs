@@ -19,4 +19,5 @@ public class Post
   public string Body { get; set; }
   [Required]
   public string SubTitle { get; set; }
+  public List<PostTag> PostTags { get; set; }
 }

@@ -20,4 +20,5 @@ public class PostDto
   public string Body { get; set; }
   [Required]
   public string SubTitle { get; set; }
+  public List<TagDto> Tags { get; set; }
 }
