@@ -15,6 +15,7 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
     public DbSet<PostComment> postComments { get; set; }
     public DbSet<SubAuthor> subAuthors { get; set; }
     public DbSet<Tag> Tags { get; set; }
+    public DbSet<PostTag> PostTags { get; set; }
 
     public TabloidDbContext(DbContextOptions<TabloidDbContext> context, IConfiguration config) : base(context)
     {
