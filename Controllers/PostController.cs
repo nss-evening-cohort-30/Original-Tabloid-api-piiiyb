@@ -194,46 +194,6 @@ public IActionResult GetByUser(int userId)
   return Ok(posts);
 }
 
-  [HttpGet("{id}")]
-  [Authorize]
-
-  public IActionResult GetById(int id)
-  {
-
-    Post post = _dbContext.posts.Include(c => c.Category).Include(a => a.User).SingleOrDefault(s => s.Id == id);
-
-    if (post == null)
-    {
-      return NotFound();
-    }
-    return Ok(new PostDto
-    {
-      Id = post.Id,
-      Title = post.Title,
-      CategoryId = post.CategoryId,
-      Category = new CategoryDto
-      {
-        Id = post.Category.Id,
-        Name = post.Category.Name
-      },
-      PublishedOn = post.PublishedOn,
-      RealTime = post.RealTime,
-      UserId = post.UserId,
-      User = new UserProfileDto
-      {
-        Id = post.User.Id,
-        FirstName = post.User.FirstName,
-        LastName = post.User.LastName,
-        UserName = post.User.UserName,
-        Email = post.User.Email,
-
-      },
-      Body = post.Body,
-      SubTitle = post.SubTitle
-    });
-  }
-
-
 [HttpPut("{id}")]
 [Authorize]
 public IActionResult UpdatePost(Post post, int id)
