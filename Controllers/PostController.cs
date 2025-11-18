@@ -53,7 +53,7 @@ public class PostController : ControllerBase
   {
     var post = _dbContext.posts
       .Include(p => p.Category)
-      .Include(p => p.Author)
+      .Include(p => p.User)
       .Include(p => p.PostTags)
         .ThenInclude(pt => pt.Tag)
       .FirstOrDefault(p => p.Id == id);
@@ -75,11 +75,12 @@ public class PostController : ControllerBase
       },
       PublishedOn = post.PublishedOn,
       RealTime = post.RealTime,
-      AuthorId = post.AuthorId,
-      Author = new AuthorDto
+      UserId = post.UserId,
+      User = new UserProfileDto
       {
-        Id = post.Author.Id,
-        Name = post.Author.Name
+        Id = post.User.Id,
+        FirstName = post.User.FirstName,
+        LastName = post.User.LastName
       },
       Body = post.Body,
       SubTitle = post.SubTitle,
