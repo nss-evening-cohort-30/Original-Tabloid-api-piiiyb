@@ -156,46 +156,43 @@ public class PostController : ControllerBase
   }
 
 
-
-  [HttpGet("{id}")]
-  [Authorize]
-
-  public IActionResult GetById(int id)
-  {
-
-    Post post = _dbContext.posts.Include(c => c.Category).Include(a => a.User).SingleOrDefault(s => s.Id == id);
-
-    if (post == null)
+[HttpGet("user/{userId}")]
+//[Authorize]
+public IActionResult GetByUser(int userId)
+{
+  var posts = _dbContext.posts
+    .Include(p => p.Category)
+    .Include(p => p.User)
+    .Where(p => p.UserId == userId)
+    .OrderByDescending(p => p.PublishedOn)
+    .Select(p => new PostDto
     {
-      return NotFound();
-    }
-    return Ok(new PostDto
-    {
-      Id = post.Id,
-      Title = post.Title,
-      CategoryId = post.CategoryId,
+      Id = p.Id,
+      Title = p.Title,
+      CategoryId = p.CategoryId,
       Category = new CategoryDto
       {
-        Id = post.Category.Id,
-        Name = post.Category.Name
+        Id = p.Category.Id,
+        Name = p.Category.Name
       },
-      PublishedOn = post.PublishedOn,
-      RealTime = post.RealTime,
-      UserId = post.UserId,
+      PublishedOn = p.PublishedOn,
+      RealTime = p.RealTime,
+      UserId = p.UserId,
       User = new UserProfileDto
       {
-        Id = post.User.Id,
-        FirstName = post.User.FirstName,
-        LastName = post.User.LastName,
-        UserName = post.User.UserName,
-        Email = post.User.Email,
-
+        Id = p.User.Id,
+        FirstName = p.User.FirstName,
+        LastName = p.User.LastName,
+        UserName = p.User.UserName,
+        Email = p.User.Email
       },
-      Body = post.Body,
-      SubTitle = post.SubTitle
-    });
-  }
+      Body = p.Body,
+      SubTitle = p.SubTitle
+    })
+    .ToList();
 
+  return Ok(posts);
+}
 
 [HttpPut("{id}")]
 [Authorize]
