@@ -51,6 +51,43 @@ public class PostController : ControllerBase
   }
 
 
+[HttpGet("user/{userId}")]
+//[Authorize]
+public IActionResult GetByUser(int userId)
+{
+  var posts = _dbContext.posts
+    .Include(p => p.Category)
+    .Include(p => p.User)
+    .Where(p => p.UserId == userId)
+    .OrderByDescending(p => p.PublishedOn)
+    .Select(p => new PostDto
+    {
+      Id = p.Id,
+      Title = p.Title,
+      CategoryId = p.CategoryId,
+      Category = new CategoryDto
+      {
+        Id = p.Category.Id,
+        Name = p.Category.Name
+      },
+      PublishedOn = p.PublishedOn,
+      RealTime = p.RealTime,
+      UserId = p.UserId,
+      User = new UserProfileDto
+      {
+        Id = p.User.Id,
+        FirstName = p.User.FirstName,
+        LastName = p.User.LastName,
+        UserName = p.User.UserName,
+        Email = p.User.Email
+      },
+      Body = p.Body,
+      SubTitle = p.SubTitle
+    })
+    .ToList();
+
+  return Ok(posts);
+}
 
   [HttpGet("{id}")]
   [Authorize]
