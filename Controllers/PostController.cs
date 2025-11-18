@@ -35,11 +35,11 @@ public class PostController : ControllerBase
       },
       PublishedOn = p.PublishedOn,
       RealTime = p.RealTime,
-      AuthorId = p.AuthorId,
-      Author = new AuthorDto
+      UserId = p.UserId,
+      User = new UserProfileDto
       {
-        Id = p.Author.Id,
-        Name = p.Author.Name
+        Id = p.User.Id,
+        FirstName = p.User.FirstName
       },
       Body = p.Body,
       SubTitle = p.SubTitle

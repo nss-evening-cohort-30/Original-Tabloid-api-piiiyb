@@ -13,8 +13,8 @@ public class Post
   [Required]
   public int RealTime { get; set; }
   [Required]
-  public int AuthorId { get; set; }
-  public Author Author { get; set; }
+  public int UserId { get; set; }
+  public UserProfile User { get; set; }
   [Required]
   public string Body { get; set; }
   [Required]

@@ -25,4 +25,37 @@ public class CategoryController : ControllerBase
     {
         return Ok(_dbContext.categorys.Select(c => new CategoryDto {Name = c.Name, Id = c.Id}).ToList());
     }
+
+  [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+  {
+    Category CategoryToDelete = _dbContext.categorys.FirstOrDefault(c => c.Id == id);
+    if (CategoryToDelete == null)
+    {
+      return NotFound();
+    };
+    _dbContext.categorys.Remove(CategoryToDelete);
+    _dbContext.SaveChanges();
+    return NoContent();
+  }
+
+  [HttpPost]
+    public IActionResult Post(Category CategoryToCreate)
+  {
+    _dbContext.categorys.Add(CategoryToCreate);
+    _dbContext.SaveChanges();
+    return Created($"api/Category/{CategoryToCreate.Id}", CategoryToCreate);
+  }
+  [HttpPut("{id}")]
+    public IActionResult Put(int id, Category Update)
+  {
+    Category CategoryToUpdate = _dbContext.categorys.FirstOrDefault(c => c.Id == id);
+    if (CategoryToUpdate == null)
+    {
+      return NotFound();
+    }
+    CategoryToUpdate.Name = Update.Name;
+    _dbContext.SaveChanges();
+    return NoContent();
+  }
 }

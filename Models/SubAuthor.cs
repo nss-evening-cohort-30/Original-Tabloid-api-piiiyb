@@ -8,5 +8,5 @@ public class SubAuthor
   public int UserId { get; set; }
   [Required]
   public int AuthorId { get; set; }
-  public Author Author {  get; set; }
+  public UserProfile Author {  get; set; }
 }

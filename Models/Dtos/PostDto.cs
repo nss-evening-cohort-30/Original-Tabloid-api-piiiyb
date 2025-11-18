@@ -14,8 +14,8 @@ public class PostDto
   [Required]
   public int RealTime { get; set; }
   [Required]
-  public int AuthorId { get; set; }
-  public AuthorDto Author { get; set; }
+  public int UserId { get; set; }
+  public UserProfileDto User { get; set; }
   [Required]
   public string Body { get; set; }
   [Required]
