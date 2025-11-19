@@ -1,0 +1,43 @@
+using Microsoft.AspNetCore.Mvc;
+using Tabloid.Models;
+using Tabloid.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Tabloid.Models.Dtos;
+using System.Runtime.Intrinsics.X86;
+
+namespace Tabloid.Controllers;
+
+
+[ApiController]
+[Route("api/[controller]")]
+public class PostCommentController : ControllerBase
+{
+    private TabloidDbContext _dbContext;
+
+    public PostCommentController(TabloidDbContext context)
+    {
+        _dbContext = context;
+    }
+
+  [HttpGet("{postId}")]
+    public IActionResult GetByPostId(int postId)
+  {
+    return Ok(_dbContext.postComments
+      .Where(pc => pc.PostId == postId)
+      .Include(pc => pc.User)
+      .Select(pc => new PostCommentDto
+      {
+        Id = pc.Id,
+        Comment = pc.Comment,
+        PostedOne = pc.PostedOne,
+        User = new UserProfileDto
+        {
+          Id = pc.User.Id,
+          FirstName = pc.User.FirstName,
+          LastName = pc.User.LastName
+        }
+      }).ToList());
+  }
+}

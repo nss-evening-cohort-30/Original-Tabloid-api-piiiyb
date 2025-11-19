@@ -13,4 +13,5 @@ public class PostCommentDto
   public string Comment { get; set; }
   [Required]
   public DateTime PostedOne { get; set; }
+  public UserProfileDto User { get; set; }
 }

@@ -14,4 +14,6 @@ public class PostComment
   public string Comment { get; set; }
   [Required]
   public DateTime PostedOne { get; set; }
+
+  public UserProfile User { get; set; }
 }
