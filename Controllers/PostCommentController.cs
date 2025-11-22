@@ -50,6 +50,13 @@ public class PostCommentController : ControllerBase
   [HttpDelete("{id}")]
     public IActionResult Delete(int id)
   {
-    PostComment PostToDelete 
+    PostComment PostCommentToDelete = _dbContext.postComments.FirstOrDefault(c => c.Id == id);
+    if (PostCommentToDelete == null)
+    {
+      return NotFound();
+    }
+    _dbContext.postComments.Remove(PostCommentToDelete);
+    _dbContext.SaveChanges();
+      return NoContent();
   }
 }
