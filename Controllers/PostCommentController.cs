@@ -32,6 +32,7 @@ public class PostCommentController : ControllerBase
         Id = pc.Id,
         Comment = pc.Comment,
         PostedOne = pc.PostedOne,
+        UserId = pc.UserId,
         User = new UserProfileDto
         {
           Id = pc.User.Id,
