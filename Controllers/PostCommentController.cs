@@ -40,4 +40,11 @@ public class PostCommentController : ControllerBase
         }
       }).ToList());
   }
+  [HttpPost]
+    public IActionResult Create(PostComment PostToCreate)
+  {
+    _dbContext.postComments.Add(PostToCreate);
+    _dbContext.SaveChanges();
+    return Created($"api/PostComment/{PostToCreate.Id}", PostToCreate);
+  }
 }
