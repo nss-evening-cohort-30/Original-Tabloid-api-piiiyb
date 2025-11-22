@@ -155,6 +155,44 @@ public class PostController : ControllerBase
     return NoContent();
   }
 
+  [HttpGet("tag/{tagId}")]
+  // [Authorize]
+  public IActionResult GetByTag(int tagId)
+  {
+    var posts = _dbContext.PostTags
+      .Where(pt => pt.TagId == tagId)
+      .Include(pt => pt.Post)
+        .ThenInclude(p => p.Category)
+      .Include(pt => pt.Post)
+        .ThenInclude(p => p.User)
+      .Select(pt => new PostDto
+      {
+        Id = pt.Post.Id,
+        Title = pt.Post.Title,
+        CategoryId = pt.Post.CategoryId,
+        Category = new CategoryDto
+        {
+          Id = pt.Post.Category.Id,
+          Name = pt.Post.Category.Name
+        },
+        PublishedOn = pt.Post.PublishedOn,
+        RealTime = pt.Post.RealTime,
+        UserId = pt.Post.UserId,
+        User = new UserProfileDto
+        {
+          Id = pt.Post.User.Id,
+          FirstName = pt.Post.User.FirstName,
+          LastName = pt.Post.User.LastName,
+          UserName = pt.Post.User.UserName,
+          Email = pt.Post.User.Email
+        },
+        Body = pt.Post.Body,
+        SubTitle = pt.Post.SubTitle
+      })
+      .ToList();
+
+    return Ok(posts);
+  }
 
 [HttpGet("user/{userId}")]
 //[Authorize]
