@@ -40,6 +40,7 @@ public class PostCommentController : ControllerBase
         }
       }).ToList());
   }
+
   [HttpPost]
     public IActionResult Create(PostComment PostCommentToCreate)
   {
@@ -47,6 +48,7 @@ public class PostCommentController : ControllerBase
     _dbContext.SaveChanges();
     return Created($"api/PostComment/{PostCommentToCreate.Id}", PostCommentToCreate);
   }
+
   [HttpDelete("{id}")]
     public IActionResult Delete(int id)
   {
@@ -58,5 +60,18 @@ public class PostCommentController : ControllerBase
     _dbContext.postComments.Remove(PostCommentToDelete);
     _dbContext.SaveChanges();
       return NoContent();
+  }
+
+  [HttpPut("{id}")]
+    public IActionResult Update(int id, PostComment Update)
+  {
+    PostComment PostCommentToUpdate = _dbContext.postComments.FirstOrDefault(c => c.Id == id);
+    if (PostCommentToUpdate == null)
+    {
+      return NotFound();
+    }
+    PostCommentToUpdate.Comment = Update.Comment;
+    _dbContext.SaveChanges();
+    return NoContent();
   }
 }
