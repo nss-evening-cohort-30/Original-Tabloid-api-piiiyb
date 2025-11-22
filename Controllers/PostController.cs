@@ -246,7 +246,7 @@ public IActionResult UpdatePost(Post post, int id)
     updatedPost.CategoryId = post.CategoryId;
     updatedPost.PublishedOn = post.PublishedOn;
     updatedPost.RealTime = post.RealTime;
-    updatedPost.UserId = post.UserId;
+    // updatedPost.UserId = post.UserId;
     updatedPost.Body = post.Body;
     updatedPost.SubTitle = post.SubTitle;
 
