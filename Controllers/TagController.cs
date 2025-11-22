@@ -18,7 +18,7 @@ public class TagController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public IActionResult GetAll()
     {
         var tags = _dbContext.Tags
