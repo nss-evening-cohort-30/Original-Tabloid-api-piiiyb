@@ -9,7 +9,7 @@ public class Post
   [Required]
   public int CategoryId { get; set; }
   public Category Category { get; set; }
-  public DateTime PublishedOn { get; set; }
+  public DateTime? PublishedOn { get; set; }
   [Required]
   public int RealTime { get; set; }
   [Required]

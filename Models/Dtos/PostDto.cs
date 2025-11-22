@@ -10,7 +10,7 @@ public class PostDto
   public int CategoryId { get; set; }
   public CategoryDto Category { get; set; }
   [Required]
-  public DateTime PublishedOn { get; set; }
+  public DateTime? PublishedOn { get; set; }
   [Required]
   public int RealTime { get; set; }
   [Required]
